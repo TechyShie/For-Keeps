@@ -2,11 +2,14 @@
 import { useState } from 'react'
 import NoteCard from '../../components/Notecard'
 
+
+type NoteColor = 'lavender' | 'butter' | 'blue' | 'rose'
 interface Note {
   id: number
   label: string
   title: string
   footer: string
+  color: NoteColor
 }
 
 function Workspace() {
@@ -16,12 +19,14 @@ function Workspace() {
       label: 'A LITTLE REMINDER',
       title: "Don't forget to enjoy the little things.",
       footer: 'Made with a little care ♡',
+      color: 'lavender'
     },
     {
       id: 2,
       label: 'STUDY TIME',
       title: 'Keep learning, one step at a time.',
       footer: 'You are making progress ♡',
+      color: 'butter'
     },
   ])
 
@@ -31,6 +36,7 @@ function Workspace() {
       label: 'NEW NOTE',
       title: 'Write something...',
       footer: 'A little space for you ♡',
+      color: 'blue'
     }
     setNotes((currentNotes) => [...currentNotes, newNote])
   }
@@ -50,6 +56,18 @@ function Workspace() {
     currentNotes.filter((note) => note.id !== id)
   )
   }
+
+  const updateNoteColor = (id: number, color: NoteColor) =>{
+    setNotes((currentNotes) =>
+      currentNotes.map((note) =>
+        note.id === id
+        ? { ...note, color }
+        : note
+      )
+    )
+  }
+
+ 
 
   return (
     <section className="workspace">
@@ -76,8 +94,10 @@ function Workspace() {
             label={note.label}
             title={note.title}
             footer={note.footer}
+            color={note.color}
             onUpdate={updateNote}
             onDelete={deleteNote}
+            onColorChange={updateNoteColor}
           />
         ))}
       </div>

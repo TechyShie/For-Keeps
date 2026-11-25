@@ -158,3 +158,59 @@
 .delete-note-btn:hover{
   opacity: 1;
 }
+
+
+/* Note colour variations */
+
+.note-lavender {
+  background-color: #e8e0f2;
+}
+
+.note-butter {
+  background-color: #f5e9b9;
+}
+
+.note-blue {
+  background-color: #dceaf2;
+}
+
+.note-rose {
+  background-color: #f2dfdc;
+}
+
+/* Colour selector */
+
+.note-colors {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.color-swatch {
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgba(80, 65, 55, 0.18);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swatch-lavender {
+  background-color: #bda9d6;
+}
+
+.swatch-butter {
+  background-color: #e5ce79;
+}
+
+.swatch-blue {
+  background-color: #a9c9dc;
+}
+
+.swatch-rose {
+  background-color: #d9aaa5;
+}
+
+.color-swatch[aria-pressed="true"] {
+  outline: 2px solid #796b86;
+  outline-offset: 2px;
+}
