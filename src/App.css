@@ -1,0 +1,143 @@
+.app{
+  min-height: 100vh;
+  padding: 32px 56px;
+}
+
+.app-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8dfd2;
+}
+
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon{
+  color: #a28cbd;
+  font-size: 26px;
+}
+
+.brand h1{
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.header-caption{
+  color: #968a7c;
+  font-size: 13px;
+}
+
+.workspace{
+  max-width: 1100px;
+  margin:90px auto;
+}
+
+.workspace-heading{
+  max-width: 480px;
+  margin-bottom: 48px;
+}
+
+.eyebrow{
+  color: #a28cdb;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.workspace-heading{
+  font-family: Georgia, serif;
+  font-size: 38px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.workspace-description{
+  color: #968a7c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.note-preview{
+  position: relative;
+  width: 260px;
+  min-height: 240px;
+  padding: 30px 26px;
+  background-color: #e9e0f2;
+  box-shadow: 2px 5px 14px rgba(75, 60, 50, 0.09);
+  transform: rotate(-2deg);
+}
+
+.note-pin{
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translatex(-50%);
+  color: #a28cbd;
+  font-size: 23px;
+}
+
+.note-label{
+  color: #89769f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+}
+
+.note-content {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #51483f;
+  font-family: Georgia, serif;
+  font-size: 23px;
+  line-height: 1.4;
+}
+
+.note-content::placeholder {
+  color: #a99caa;
+}
+
+.note-content:focus {
+  outline: none;
+}
+
+.note-footer{
+  position: absolute;
+  bottom: 22px;
+  color: #89769f;
+  font-size: 11px;
+}
+
+.add-note-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 10px 16px;
+  border: 1px solid #d8cbb9;
+  border-radius: 8px;
+  background-color: #fffaf3;
+  color: #716253;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.add-note-btn span{
+  font-size: 18px;
+}
+
+.add-note-btn:hover{
+  background-color: #eee5d8;
+  transform: translateY(-1px);
+}
