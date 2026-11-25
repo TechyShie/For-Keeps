@@ -4,6 +4,7 @@ interface NoteCardProps {
   title: string
   footer: string
   onUpdate: (id: number, title: string) => void
+  onDelete: (id: number) => void
 }
 
 function NoteCard({
@@ -12,10 +13,20 @@ function NoteCard({
   title,
   footer,
   onUpdate,
+  onDelete,
 }: NoteCardProps) {
   return (
     <article className="note-preview">
       <div className="note-pin">✳</div>
+
+      <button
+      className = "delete-note-btn"
+      onClick={() => onDelete(id)}
+      arial-label="Delete note"
+      title="Delete Note">
+        x
+
+      </button>
 
       <p className="note-label">{label}</p>
 

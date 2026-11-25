@@ -45,6 +45,12 @@ function Workspace() {
     )
   }
 
+  const deleteNote = (id: number) => {
+    setNotes((currentNotes) =>
+    currentNotes.filter((note) => note.id !== id)
+  )
+  }
+
   return (
     <section className="workspace">
       <div className="workspace-heading">
@@ -71,6 +77,7 @@ function Workspace() {
             title={note.title}
             footer={note.footer}
             onUpdate={updateNote}
+            onDelete={deleteNote}
           />
         ))}
       </div>

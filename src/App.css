@@ -141,3 +141,20 @@
   background-color: #eee5d8;
   transform: translateY(-1px);
 }
+
+.delete-note-btn{
+  position: absolute;
+  top: 12px;
+  border: none;
+  background: transparent;
+  color: #89769f;
+  font-size: 21px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+
+}
+
+.delete-note-btn:hover{
+  opacity: 1;
+}
