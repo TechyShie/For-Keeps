@@ -33,5 +33,8 @@ export interface Note {
     label: string
     footer: string
     color: NoteColor
+    paper: NotePaper
     content: NoteBlock[]
 }
+
+export type NotePaper = 'sticky' | 'notebook'

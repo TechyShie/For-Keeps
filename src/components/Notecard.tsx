@@ -69,7 +69,7 @@ function NoteCard({
   }
 
   return (
-    <article className={`note-preview note-${note.color}`}>
+    <article className={`note-preview note-${note.color} note-${note.paper}`}>
       <div className="note-pin">✳</div>
 
       <button

@@ -9,6 +9,7 @@ function Workspace() {
       label: 'A LITTLE REMINDER',
       footer: 'Made with a little care ♡',
       color: 'lavender',
+      paper: 'sticky',
       content: [
         {
           id: 1,
@@ -27,6 +28,7 @@ function Workspace() {
       label: 'STUDY TIME',
       footer: 'You are making progress ♡',
       color: 'butter',
+      paper: 'notebook',
       content: [
         {
           id: 3,
@@ -55,6 +57,7 @@ function Workspace() {
       label: 'NEW NOTE',
       footer: 'A little space for you ♡',
       color: 'blue',
+      paper: 'sticky',
       content: [
         {
           id: Date.now(),

@@ -323,3 +323,38 @@
 .delete-block-btn:hover {
   opacity: 1;
 }
+
+.note-sticky{
+  width: 260px;
+  min-height: 240px;
+  padding: 30px 26px;
+  border-radius: 2px;
+  transform: rotate(-2deg);
+  box-shadow: 2px 5px 14px rgba(75, 60, 50, 0.09);
+}
+
+.note-notebook{
+  width: 300px;
+  min-height: 340px;
+  padding: 34px 26px 28px 38px;
+  border-radius: 2px;
+  transform: rotate(0deg);
+  background-image:
+    linear-gradient(
+    to right,
+    transparent 0,
+    transparent 25px,
+    rgba(202, 133, 133, 0.5) 25px,
+    rgba(202, 133, 133, 0.5) 27px,
+    transparent 27px
+  ),
+  repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    rgba(126, 159, 190, 0.28) 27px,
+    rgba(126, 159, 190, 0.28) 28px
+  );
+  background-color: #fffdf6;
+  box-shadow: 2px 5px 14px rgba(75, 60, 50, 0.09);
+}
