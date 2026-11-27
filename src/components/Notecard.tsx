@@ -1,10 +1,15 @@
-import type { Note, NoteColor, NoteBlock } from '../types/notes'
+import { useRef } from 'react'
+import type { Note, NoteColor, NoteBlock } from '../types/note'
 
 interface NoteCardProps {
   note: Note
   onDelete: (id: number) => void
   onColorChange: (id: number, color: NoteColor) => void
   onContentChange: (id: number, content: NoteBlock[]) => void
+  isActive: boolean
+  onDragStart: (id: number) => void
+  onDrag: (id: number, x: number, y: number) => void
+  onDragEnd: () => void
 }
 
 function NoteCard({
@@ -12,7 +17,13 @@ function NoteCard({
   onDelete,
   onColorChange,
   onContentChange,
+  isActive,
+  onDragStart,
+  onDrag,
+  onDragEnd,
 }: NoteCardProps) {
+  const dragOffset = useRef({ x: 0, y: 0 })
+
   const colors: NoteColor[] = [
     'lavender',
     'butter',
@@ -68,8 +79,72 @@ function NoteCard({
     onContentChange(note.id, updatedContent)
   }
 
+  const handleMouseDown = (
+    event: React.MouseEvent<HTMLDivElement>
+  ) => {
+    const noteElement = event.currentTarget.parentElement
+
+    if (!noteElement) return
+
+    const rect = noteElement.getBoundingClientRect()
+
+    dragOffset.current = {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+    }
+
+    onDragStart(note.id)
+  }
+
+  const handleMouseMove = (
+    event: React.MouseEvent<HTMLDivElement>
+  ) => {
+    if (event.buttons !== 1) return
+
+    const workspace = event.currentTarget.closest('.notes-container')
+
+    if (!workspace) return
+
+    const workspaceRect = workspace.getBoundingClientRect()
+
+    const x =
+      event.clientX -
+      workspaceRect.left -
+      dragOffset.current.x
+
+    const y =
+      event.clientY -
+      workspaceRect.top -
+      dragOffset.current.y
+
+    onDrag(
+      note.id,
+      x,
+      y
+    )
+  }
+
   return (
-    <article className={`note-preview note-${note.color} note-${note.paper}`}>
+    <article
+      className={`note-preview note-${note.color} note-${note.paper}${isActive ? ' note-active' : ''}`}
+      style={{
+        left: note.x,
+        top: note.y,
+        zIndex: note.zIndex,
+      }}
+    >
+      <div
+        className="note-drag-handle"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={onDragEnd}
+        onMouseLeave={onDragEnd}
+        onDragStart={(event) => event.preventDefault()}
+      >
+        <span>✳</span>
+        <span>Drag note</span>
+      </div>
+
       <div className="note-pin">✳</div>
 
       <button

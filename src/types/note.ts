@@ -35,6 +35,9 @@ export interface Note {
     color: NoteColor
     paper: NotePaper
     content: NoteBlock[]
+    x: number
+    y: number
+    zIndex: number
 }
 
 export type NotePaper = 'sticky' | 'notebook'

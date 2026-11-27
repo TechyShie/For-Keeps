@@ -1,6 +1,13 @@
+
 import { useState } from 'react'
 import NoteCard from '../../components/NoteCard'
-import type { Note, NoteColor, NoteBlock } from '../../types/notes'
+
+import type {
+  Note,
+  NoteColor,
+  NoteBlock,
+  NotePaper,
+} from '../../types/note'
 
 function Workspace() {
   const [notes, setNotes] = useState<Note[]>([
@@ -10,6 +17,9 @@ function Workspace() {
       footer: 'Made with a little care ♡',
       color: 'lavender',
       paper: 'sticky',
+      x: 40,
+      y: 30,
+      zIndex: 1,
       content: [
         {
           id: 1,
@@ -29,6 +39,9 @@ function Workspace() {
       footer: 'You are making progress ♡',
       color: 'butter',
       paper: 'notebook',
+      x: 340,
+      y: 80,
+      zIndex: 2,
       content: [
         {
           id: 3,
@@ -51,16 +64,23 @@ function Workspace() {
     },
   ])
 
-  const addNote = () => {
+  const [showCreateMenu, setShowCreateMenu] = useState(false)
+
+  const [activeNoteId, setActiveNoteId] = useState<number | null>(null)
+
+  const addNote = (paper: NotePaper) => {
     const newNote: Note = {
       id: Date.now(),
-      label: 'NEW NOTE',
+      label: paper === 'sticky' ? 'NEW NOTE' : 'NEW PAGE',
       footer: 'A little space for you ♡',
       color: 'blue',
-      paper: 'sticky',
+      paper,
+      x: 80,
+      y: 60,
+      zIndex: Date.now(),
       content: [
         {
-          id: Date.now(),
+          id: Date.now() + 1,
           type: 'paragraph',
           text: '',
         },
@@ -96,6 +116,40 @@ function Workspace() {
     )
   }
 
+  const bringToFront = (id: number) => {
+    setNotes((currentNotes) => {
+      const highestZIndex = Math.max(
+        ...currentNotes.map((note) => note.zIndex),
+        0
+      )
+
+      return currentNotes.map((note) =>
+        note.id === id
+          ? { ...note, zIndex: highestZIndex + 1 }
+          : note
+      )
+    })
+  }
+
+  const startDragging = (id: number) => {
+    setActiveNoteId(id)
+    bringToFront(id)
+  }
+
+  const moveNote = (id: number, x: number, y: number) => {
+    setNotes((currentNotes) =>
+      currentNotes.map((note) =>
+        note.id === id
+          ? { ...note, x, y }
+          : note
+      )
+    )
+  }
+
+  const stopDragging = () => {
+    setActiveNoteId(null)
+  }
+
   return (
     <section className="workspace">
       <div className="workspace-heading">
@@ -108,9 +162,45 @@ function Workspace() {
           will find a home here.
         </p>
 
-        <button className="add-note-btn" onClick={addNote}>
-          <span>+</span> Add a note
-        </button>
+        <div className="create-note-wrapper">
+          <button
+            className="add-note-btn"
+            onClick={() => setShowCreateMenu(!showCreateMenu)}
+            aria-expanded={showCreateMenu}
+          >
+            <span>+</span> Add a note
+          </button>
+
+          {showCreateMenu && (
+            <div className="create-note-menu">
+              <button
+                onClick={() => {
+                  addNote('sticky')
+                  setShowCreateMenu(false)
+                }}
+              >
+                <span>🗒️</span>
+                <div>
+                  <strong>Sticky note</strong>
+                  <small>For quick thoughts</small>
+                </div>
+              </button>
+
+              <button
+                onClick={() => {
+                  addNote('notebook')
+                  setShowCreateMenu(false)
+                }}
+              >
+                <span>📖</span>
+                <div>
+                  <strong>Notebook page</strong>
+                  <small>For longer notes and lists</small>
+                </div>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="notes-container">
@@ -121,6 +211,10 @@ function Workspace() {
             onDelete={deleteNote}
             onColorChange={updateNoteColor}
             onContentChange={updateNoteContent}
+            isActive={activeNoteId === note.id}
+            onDragStart={startDragging}
+            onDrag={moveNote}
+            onDragEnd={stopDragging}
           />
         ))}
       </div>
