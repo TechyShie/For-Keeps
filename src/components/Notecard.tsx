@@ -79,9 +79,11 @@ function NoteCard({
     onContentChange(note.id, updatedContent)
   }
 
-  const handleMouseDown = (
-    event: React.MouseEvent<HTMLDivElement>
+  const handlePointerDown = (
+    event: React.PointerEvent<HTMLDivElement>
   ) => {
+    if (!event.isPrimary || event.button !== 0) return
+
     const noteElement = event.currentTarget.parentElement
 
     if (!noteElement) return
@@ -93,13 +95,15 @@ function NoteCard({
       y: event.clientY - rect.top,
     }
 
+    event.currentTarget.setPointerCapture(event.pointerId)
+
     onDragStart(note.id)
   }
 
-  const handleMouseMove = (
-    event: React.MouseEvent<HTMLDivElement>
+  const handlePointerMove = (
+    event: React.PointerEvent<HTMLDivElement>
   ) => {
-    if (event.buttons !== 1) return
+    if (!event.currentTarget.hasPointerCapture(event.pointerId)) return
 
     const workspace = event.currentTarget.closest('.notes-container')
 
@@ -117,11 +121,21 @@ function NoteCard({
       workspaceRect.top -
       dragOffset.current.y
 
-    onDrag(
-      note.id,
-      x,
-      y
-    )
+    onDrag(note.id, x, y)
+  }
+
+  const handlePointerUp = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+
+    onDragEnd()
+  }
+
+  const handlePointerCancel = () => {
+    onDragEnd()
   }
 
   return (
@@ -135,10 +149,10 @@ function NoteCard({
     >
       <div
         className="note-drag-handle"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={onDragEnd}
-        onMouseLeave={onDragEnd}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerCancel}
         onDragStart={(event) => event.preventDefault()}
       >
         <span>✳</span>
